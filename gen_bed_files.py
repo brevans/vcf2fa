@@ -13,9 +13,10 @@ bed_fn = re.sub('\.fa$|\.fasta$', '.bed', path.basename(ref_fn))
 with open(sbed_fn, 'w') as sbed_fh:
     with open(genome_fn, 'w') as genome_fh:
         with open(bed_fn, 'w') as bed_fh:
-            for ch in ref.keys():
-                genome_fh.write('{}\t{}\n'.format(ch, len(ref[ch])))
-                bed_fh.write('{}\t0\t{}\n'.format(ch, len(ref[ch])))
-                for pos in range(len(ref[ch])):
+            for rec in SeqIO.parse(open(ref_fn), "fasta"):
+                length = len(rec)
+                genome_fh.write('{}\t{}\n'.format(rec.id, length))
+                bed_fh.write('{}\t0\t{}\n'.format(rec.id, length))
+                for pos in range(length):
                     sbed_fh.write('{}\t{}\t{}\t{}\n'.format(
-                                  ch, pos, pos+1, ref[ch][pos]))
+                                  rec.id, pos, pos+1, rec[pos]))
