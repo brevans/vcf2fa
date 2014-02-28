@@ -6,7 +6,6 @@ Given a vcf and a set of bam files, generate consensus sequences for each indivi
 ###Required Software:
 - python http://www.python.org/downloads/
 - biopython http://biopython.org/wiki/Download
-- samtools http://sourceforge.net/projects/samtools/files/
 - bedtools https://github.com/arq5x/bedtools2
 
 
@@ -27,4 +26,9 @@ samtools mpileup -uDf ref.fasta *.bam | bcftools view -vcg - > var.vcf
 #Generate a matrix of depth of coverage per sample per position:
 ./gen_bed_files.py reference.fa
 bedtools multicov -bams path/to/bams/*.bam -bed reference_single_base.bed > multicov.bed
+```
+###STEP 2:
+```bash
+./vcf2fa.py --min_cov 18 --multicov_file multicov.bed --vcf_file var.vcf
+#will generate a subfolder in the current directory of fasta files, each one a locus, containing all individuals found in the vcf/bed files
 ```
