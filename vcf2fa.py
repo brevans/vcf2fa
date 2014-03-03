@@ -103,7 +103,7 @@ def vcf_gt_to_dna(snp, ind):
     gt = snp[ind]['GT']
     poss_gts = [ref.upper()]+[x.upper() for x in alt.split(',')] 
     trans = dict(zip([str(x) for x in range(len(poss_gts))], poss_gts))
-    sam_dna = ''.join([trans[x] for x in gt.split('/')])
+    sam_dna = ambi[''.join([trans[x] for x in gt.split('/')])]
     return sam_dna
 
 def fill_ref(samples, mincov, cov, seqs, ref_bp):
